@@ -205,11 +205,11 @@
       text-transform: uppercase;
     }
 
-    /* Сетка акций */
+    /* Сетка акций — увеличена ширина карточек */
     .sales-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-      gap: 28px;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 32px;
       margin-bottom: 40px;
     }
 
@@ -226,11 +226,14 @@
       transform: translateY(-4px);
     }
 
+    /* Увеличенная высота картинок — "расширенные окна" */
     .sale-image {
       width: 100%;
-      height: 200px;
+      height: 280px;
       object-fit: cover;
+      object-position: center;
       background: linear-gradient(135deg, #2A243F, #1F1A2E);
+      display: block;
     }
 
     .sale-content {
@@ -338,7 +341,6 @@
       opacity: 0.9;
     }
 
-    /* Заголовки h3 в карточках преимуществ */
     .benefit-item h3 {
       font-size: 1.1rem;
       margin-bottom: 8px;
@@ -526,88 +528,7 @@
       opacity: 0.7;
     }
 
-    /* Адаптивность футера (как на главной) */
-    @media (max-width: 1024px) {
-      .footer-inner {
-        flex-direction: column;
-      }
-      .footer-brand,
-      .footer-contacts,
-      .footer-nav {
-        min-width: 100%;
-        text-align: center;
-      }
-      .footer-contacts p {
-        justify-content: center;
-      }
-    }
-
-    @media (max-width: 768px) {
-      .footer-inner {
-        flex-direction: column;
-        gap: 32px;
-      }
-      .footer-contacts,
-      .footer-nav {
-        min-width: 100%;
-        text-align: center;
-      }
-      .footer-contacts p {
-        justify-content: center;
-      }
-      .footer-brand {
-        min-width: 100%;
-        max-width: 100%;
-        text-align: center;
-        margin-bottom: 24px;
-      }
-      .footer-brand h3 {
-        font-size: 1.5rem;
-      }
-      .footer-brand p {
-        font-size: 0.9rem;
-        max-width: 400px;
-        margin: 0 auto;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .footer {
-        padding: 32px 0 24px;
-      }
-      .footer-brand h3 {
-        font-size: 1.3rem;
-        margin-bottom: 12px;
-      }
-      .footer-brand p {
-        font-size: 0.85rem;
-        line-height: 1.5;
-      }
-      .footer-nav h4,
-      .footer-contacts h4 {
-        font-size: 1.1rem;
-        margin-bottom: 16px;
-      }
-      .footer-contacts p {
-        font-size: 0.9rem;
-        flex-direction: column;
-        gap: 6px;
-      }
-      .footer-contacts img {
-        width: 20px;
-        height: 20px;
-      }
-      .footer-nav li {
-        margin-bottom: 10px;
-      }
-      .copyright {
-        margin-top: 32px;
-        padding-top: 20px;
-        font-size: 0.75rem;
-      }
-    }
-
-    /* Остальные адаптивные стили для страницы акций */
+    /* Адаптивность */
     @media (max-width: 1280px) {
       .container {
         max-width: 960px;
@@ -617,7 +538,11 @@
         font-size: 2.2rem;
       }
       .sales-grid {
-        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 28px;
+      }
+      .sale-image {
+        height: 260px; /* чуть меньше на средних экранах, но всё ещё просторно */
       }
     }
 
@@ -640,6 +565,9 @@
       }
       .timer-value {
         font-size: 1.6rem;
+      }
+      .sale-image {
+        height: 240px;
       }
     }
 
@@ -689,7 +617,10 @@
       }
       .sales-grid {
         grid-template-columns: 1fr;
-        gap: 20px;
+        gap: 24px;
+      }
+      .sale-image {
+        height: 220px;
       }
       .benefits-section {
         padding: 32px 20px;
@@ -709,6 +640,22 @@
       .subscribe-form button {
         width: 100%;
       }
+      .footer-inner {
+        flex-direction: column;
+        gap: 32px;
+      }
+      .footer-contacts, .footer-nav {
+        min-width: 100%;
+        text-align: center;
+      }
+      .footer-contacts p {
+        justify-content: center;
+      }
+      .footer-brand {
+        min-width: 100%;
+        max-width: 100%;
+        text-align: center;
+      }
     }
 
     @media (max-width: 480px) {
@@ -718,65 +665,11 @@
       .container {
         padding: 0 16px;
       }
-      .header {
-        padding: 16px 0;
-      }
-      .logo-img {
-        width: 36px;
-        height: 36px;
-      }
-      .logo-text {
-        font-size: 1.2rem;
-      }
-      .nav-menu ul {
-        gap: 12px;
-      }
-      .nav-menu a {
-        font-size: 0.9rem;
-      }
-      .sales-page h1 {
-        font-size: 1.5rem;
-      }
-      .sales-subtitle {
-        font-size: 0.95rem;
-      }
-      .sales-banner {
-        padding: 24px 16px;
-        border-radius: 20px;
-      }
-      .sales-banner::before,
-      .sales-banner::after {
-        display: none;
-      }
-      .banner-badge {
-        font-size: 0.8rem;
-        padding: 6px 16px;
-      }
-      .sales-banner h2 {
-        font-size: 1.3rem;
-      }
-      .sales-banner p {
-        font-size: 0.9rem;
-      }
-      .banner-timer {
-        gap: 8px;
-      }
-      .timer-item {
-        min-width: 50px;
-        padding: 8px 10px;
-        border-radius: 8px;
-      }
-      .timer-value {
-        font-size: 1.2rem;
-      }
-      .timer-label {
-        font-size: 0.65rem;
-      }
-      .sale-card {
-        border-radius: 16px;
-      }
       .sale-image {
-        height: 160px;
+        height: 180px;
+      }
+      .sales-grid {
+        gap: 20px;
       }
       .sale-content {
         padding: 20px 16px;
@@ -784,112 +677,35 @@
       .sale-content h3 {
         font-size: 1.1rem;
       }
-      .sale-content p {
-        font-size: 0.9rem;
-      }
-      .sale-discount {
-        font-size: 1.3rem;
-      }
       .btn-sale {
-        padding: 8px 20px;
-        font-size: 0.9rem;
         width: 100%;
         text-align: center;
       }
-      .benefits-section {
-        padding: 24px 16px;
-        border-radius: 20px;
+      .benefits-grid {
+        grid-template-columns: 1fr;
       }
       .benefits-section h2 {
         font-size: 1.4rem;
       }
-      .benefits-grid {
-        grid-template-columns: 1fr;
-        gap: 16px;
-      }
-      .benefit-icon {
-        width: 50px;
-        height: 50px;
-      }
-      .benefit-item h3 {
-        font-size: 1rem;
-      }
-      .benefit-item p {
-        font-size: 0.85rem;
-      }
-      .subscribe-section {
-        padding: 28px 16px;
-        border-radius: 20px;
-      }
       .subscribe-section h2 {
         font-size: 1.4rem;
-      }
-      .subscribe-section p {
-        font-size: 0.9rem;
-      }
-      .icon-small {
-        width: 16px;
-        height: 16px;
-      }
-      .subscribe-form input,
-      .subscribe-form button {
-        padding: 10px 16px;
-        font-size: 0.95rem;
       }
     }
 
     @media (max-width: 320px) {
-      .logo-text {
-        font-size: 1rem;
-      }
-      .sales-page h1 {
-        font-size: 1.3rem;
-      }
-      .sales-banner h2 {
-        font-size: 1.1rem;
-      }
-      .timer-item {
-        min-width: 45px;
-      }
-      .timer-value {
-        font-size: 1rem;
-      }
-      .sale-discount {
-        font-size: 1.1rem;
-      }
-    }
-
-    @media (max-height: 500px) and (orientation: landscape) {
-      .header {
-        padding: 12px 0;
-        position: relative;
-      }
-      .sales-page {
-        padding: 30px 0 40px;
-      }
-      .sales-banner {
-        padding: 20px 16px;
-      }
-      .banner-timer {
-        gap: 8px;
-      }
-      .timer-item {
-        padding: 8px 10px;
+      .sale-image {
+        height: 160px;
       }
     }
 
     @media (prefers-reduced-motion: reduce) {
-      *,
-      *::before,
-      *::after {
+      *, *::before, *::after {
         transition: none !important;
       }
     }
 
     @media (hover: none) and (pointer: coarse) {
-      .btn-sale,
-      .subscribe-form button,
-      .subscribe-form input {
+      .btn-sale, .subscribe-form button, .subscribe-form input {
         min-height: 44px;
       }
       .sale-card:hover {
@@ -910,7 +726,7 @@
       <ul>
         <li><a href="sales.html" class="active">Акции</a></li>
         <li><a href="booking.html">Бронирование</a></li>
-        <li><a href="profile.html">Кабинет</a></li>
+        <li><a href="profile.html">Личный кабинет</a></li>
       </ul>
     </nav>
   </div>
@@ -946,9 +762,8 @@
       </div>
     </div>
 
-    <!-- Сетка акций -->
+    <!-- Сетка акций с увеличенными картинками -->
     <div class="sales-grid">
-      <!-- Акция 1 -->
       <div class="sale-card">
         <img class="sale-image" src="img/sale/sale-1.jfif" alt="Акция 3 книги">
         <div class="sale-content">
@@ -964,7 +779,6 @@
         </div>
       </div>
 
-      <!-- Акция 2 -->
       <div class="sale-card">
         <img class="sale-image" src="img/sale/sale-2.jfif" alt="Акция студентам">
         <div class="sale-content">
@@ -980,7 +794,6 @@
         </div>
       </div>
 
-      <!-- Акция 3 -->
       <div class="sale-card">
         <img class="sale-image" src="img/sale/sale-3.jfif" alt="Акция выходные">
         <div class="sale-content">
@@ -996,7 +809,6 @@
         </div>
       </div>
 
-      <!-- Акция 4 -->
       <div class="sale-card">
         <img class="sale-image" src="img/sale/sale-4.jpeg" alt="Акция подписка">
         <div class="sale-content">
@@ -1012,7 +824,6 @@
         </div>
       </div>
 
-      <!-- Акция 5 -->
       <div class="sale-card">
         <img class="sale-image" src="img/sale/sale-5.jfif" alt="Акция друзья">
         <div class="sale-content">
@@ -1028,7 +839,6 @@
         </div>
       </div>
 
-      <!-- Акция 6 -->
       <div class="sale-card">
         <img class="sale-image" src="img/sale/sale-6.jfif" alt="Акция день рождения">
         <div class="sale-content">
@@ -1084,7 +894,6 @@
   </div>
 </main>
 
-<!-- Подвал -->
 <footer class="footer">
   <div class="container footer-inner">
     <div class="footer-brand">
