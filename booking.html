@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Буктрейл | Бронирование книг</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+        font-family: 'Inter', sans-serif;
+        background-color: #1F1A2E;
+        color: #F0EAD6;
+        line-height: 1.6;
+    }
+
+    h1, h2, h3, h4 { font-family: 'Playfair Display', serif; color: #E9C46A; }
+    a { text-decoration: none; color: inherit; transition: 0.2s; }
+    ul { list-style: none; }
+
+    .container { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
+
+    /* Шапка */
+    .header {
+        padding: 20px 0;
+        border-bottom: 1px solid rgba(244, 162, 97, 0.25);
+        background-color: rgba(31, 26, 46, 0.95);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        backdrop-filter: blur(4px);
+    }
+
+    .header-inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 16px;
+    }
+
+    .logo-link {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .logo-img { width: 40px; height: 40px; object-fit: contain; }
+    .logo-text {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.5rem;
+        font-weight: 600;
+        background: linear-gradient(135deg, #F4A261, #E9C46A);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+    }
+
+    .nav-menu ul { display: flex; gap: 24px; }
+    .nav-menu a {
+        font-weight: 500;
+        color: #F0EAD6;
+        padding-bottom: 4px;
+        border-bottom: 2px solid transparent;
+    }
+    .nav-menu a:hover { color: #F4A261; border-bottom-color: #F4A261; }
+
+    /* Основная страница */
+    .booking-page { padding: 60px 0 80px; }
+    .booking-page h1 {
+        text-align: center;
+        font-size: 2.4rem;
+        margin-bottom: 12px;
+    }
+    .booking-subtitle {
+        text-align: center;
+        color: #CFC8E0;
+        opacity: 0.9;
+        margin-bottom: 40px;
+        font-size: 1.05rem;
+    }
+
+    /* Карточка книги */
+    .booking-card {
+        background: rgba(46, 38, 66, 0.7);
+        border-radius: 24px;
+        padding: 24px;
+        margin-bottom: 24px;
+        border: 1px solid rgba(244, 162, 97, 0.3);
+        backdrop-filter: blur(4px);
+    }
+
+    .booking-card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        padding-bottom: 16px;
+        border-bottom: 1px dashed rgba(244, 162, 97, 0.4);
+    }
+
+    /* Стили для заголовков h2 в карточках (раньше были h3) */
+    .booking-card-header h2,
+    .booking-card-header h3 {
+        font-size: 1.3rem;
+        font-family: 'Playfair Display', serif;
+        color: #F4A261;
+        margin: 0;
+    }
+
+    .remove-btn {
+        background: none;
+        border: none;
+        color: #F4A261;
+        font-size: 1.5rem;
+        cursor: pointer;
+        line-height: 1;
+        transition: 0.2s;
+    }
+    .remove-btn:hover { color: #E9C46A; transform: scale(1.1); }
+
+    /* Форма */
+    .form-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+        margin-bottom: 16px;
+    }
+
+    .form-group {
+        flex: 1;
+        min-width: 180px;
+    }
+
+    .form-group label {
+        display: block;
+        font-size: 0.8rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 8px;
+        color: #E9C46A;
+    }
+
+    .form-group input,
+    .form-group select {
+        width: 100%;
+        padding: 12px 16px;
+        background: #2A243F;
+        border: 1px solid #4A3B6E;
+        border-radius: 48px;
+        font-family: 'Inter', sans-serif;
+        font-size: 0.95rem;
+        color: #F0EAD6;
+        transition: 0.2s;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+        outline: none;
+        border-color: #F4A261;
+        box-shadow: 0 0 0 3px rgba(244, 162, 97, 0.2);
+    }
+
+    .form-group input[readonly] {
+        background: #241f35;
+        cursor: default;
+        opacity: 0.8;
+    }
+
+    /* Визуализация скидки */
+    .discount-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 16px;
+        background: linear-gradient(135deg, rgba(233, 196, 106, 0.2), rgba(244, 162, 97, 0.2));
+        border: 1px solid rgba(233, 196, 106, 0.5);
+        border-radius: 40px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        margin: 12px 0;
+    }
+
+    .discount-bar {
+        height: 8px;
+        background: #2A243F;
+        border-radius: 4px;
+        overflow: hidden;
+        margin-top: 8px;
+    }
+
+    .discount-fill {
+        height: 100%;
+        background: linear-gradient(90deg, #F4A261, #E9C46A);
+        border-radius: 4px;
+        transition: width 0.3s;
+    }
+
+    .discount-fill[data-days="0"] { 
+      width: 0%; 
+    }
+    .discount-fill[data-days="1"] { 
+      width: 16%; 
+    }
+    .discount-fill[data-days="2"] { 
+      width: 33%; 
+    }
+    .discount-fill[data-days="3"] { 
+      width: 50%; 
+    }
+    .discount-fill[data-days="4"] { 
+      width: 66%; 
+    }
+    .discount-fill[data-days="5"] { 
+      width: 100%; 
+    }
+
+    .price-summary {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 16px;
+        background: rgba(30, 25, 45, 0.6);
+        border-radius: 16px;
+        margin-top: 12px;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .price-item { font-size: 0.9rem; }
+    .price-item strong { color: #F4A261; }
+    .price-total {
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: #E9C46A;
+    }
+
+    /* Кнопки */
+    .btn-add {
+        background: transparent;
+        border: 2px solid #F4A261;
+        color: #F4A261;
+        padding: 12px 28px;
+        border-radius: 48px;
+        font-weight: 600;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: 0.2s;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        margin: 20px 0 40px;
+    }
+    .btn-add:hover {
+        background: #F4A261;
+        color: #1F1A2E;
+    }
+
+    /* Секция клиента */
+    .client-section {
+        background: rgba(46, 38, 66, 0.7);
+        border-radius: 24px;
+        padding: 28px;
+        margin: 40px 0;
+        border: 1px solid rgba(244, 162, 97, 0.3);
+    }
+
+    .client-section h2 {
+        font-size: 1.6rem;
+        margin-bottom: 24px;
+        padding-bottom: 16px;
+        border-bottom: 1px solid rgba(244, 162, 97, 0.3);
+    }
+
+    .card-preview {
+        margin-top: 8px;
+        font-size: 0.9rem;
+        color: #CFC8E0;
+        opacity: 0.9;
+    }
+
+    /* Итоговая секция */
+    .total-section {
+        background: linear-gradient(135deg, rgba(46, 38, 66, 0.9), rgba(31, 26, 46, 0.95));
+        border-radius: 24px;
+        padding: 28px;
+        margin: 30px 0;
+        border: 2px solid #F4A261;
+    }
+
+    .total-section h2 {
+        font-size: 1.6rem;
+        margin-bottom: 20px;
+    }
+
+    .total-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 0;
+        font-size: 1rem;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .total-row:last-child { border-bottom: none; }
+
+    .total-final {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: #E9C46A;
+        padding-top: 16px;
+        margin-top: 12px;
+        border-top: 2px solid rgba(244, 162, 97, 0.5);
+    }
+
+    .btn-book {
+        background: linear-gradient(135deg, #F4A261, #E9C46A);
+        color: #1F1A2E;
+        border: none;
+        padding: 16px 48px;
+        border-radius: 48px;
+        font-weight: 700;
+        font-size: 1.1rem;
+        cursor: pointer;
+        transition: 0.2s;
+        display: block;
+        margin: 40px auto 0;
+        box-shadow: 0 8px 24px rgba(244, 162, 97, 0.3);
+    }
+    .btn-book:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 32px rgba(244, 162, 97, 0.4);
+    }
+
+    /* Подвал */
+    .footer {
+      background: #14101F;
+      padding: 48px 0 32px;
+      border-top: 1px solid rgba(244, 162, 97, 0.3);
+      margin-top: 20px;
+    }
+
+    .footer-inner {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 40px;
+    }
+
+    .footer-contacts {
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .footer-contacts p {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 18px;
+      font-size: 1rem;
+    }
+
+    .footer-contacts img {
+      width: 24px;
+      height: 24px;
+      filter: brightness(0) invert(1);
+      opacity: 0.8;
+    }
+
+    .footer-nav {
+      flex: 1;
+      min-width: 150px;
+    }
+
+    .footer-brand {
+      flex: 1;
+      min-width: 250px;
+      max-width: 350px;
+    }
+
+    .footer-brand h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      font-weight: 600;
+      margin-bottom: 16px;
+      background: linear-gradient(135deg, #F4A261, #E9C46A);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .footer-brand p {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: #CFC8E0;
+      opacity: 0.9;
+    }
+
+    .footer-nav h4, .footer-contacts h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      margin-bottom: 20px;
+      color: #E9C46A;
+    }
+
+    .footer-nav ul {
+      list-style: none;
+    }
+
+    .footer-nav li {
+      margin-bottom: 12px;
+    }
+
+    .footer-nav a {
+      text-decoration: none;
+      color: #CFC8E0;
+      transition: 0.2s;
+    }
+
+    .footer-nav a:hover {
+      color: #F4A261;
+      padding-left: 4px;
+    }
+
+    .copyright {
+      text-align: center;
+      margin-top: 48px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      font-size: 0.8rem;
+      opacity: 0.7;
+    }
+
+    /* Адаптивность */
+    /* Ноутбуки 1025-1280px */
+    @media (max-width: 1280px) {
+        .container { 
+          max-width: 960px; 
+          padding: 0 20px; 
+        }
+        .booking-page h1 { 
+          font-size: 2.2rem; 
+        }
+    }
+
+    /* Планшеты 768-1024px */
+    @media (max-width: 1024px) {
+        .container { 
+          max-width: 720px; 
+        }
+        .booking-page h1 { 
+          font-size: 2rem; 
+        }
+        .form-row { 
+          gap: 12px; 
+        }
+        .footer-inner { 
+          flex-direction: column; }
+
+        .footer-brand, .footer-contacts, .footer-nav { 
+          min-width: 100%; 
+          text-align: center; 
+        }
+        .footer-contacts p { 
+          justify-content: center; 
+        }
+    }
+
+    /* Планшеты портрет 481-767px */
+    @media (max-width: 768px) {
+        .header-inner { 
+          flex-direction: column; 
+          gap: 12px; 
+        }
+        .nav-menu ul { 
+          gap: 16px; 
+          flex-wrap: wrap; 
+          justify-content: center; 
+        }
+        .logo-text { 
+          font-size: 1.3rem; 
+        }
+        .booking-page { 
+          padding: 40px 0 60px; 
+        }
+        .booking-page h1 { 
+          font-size: 1.8rem; 
+        }
+        .booking-subtitle { 
+          font-size: 1rem; 
+        }
+        .booking-card { 
+          padding: 20px; 
+        }
+        .form-group { 
+          min-width: 100%; 
+        }
+        .client-section, .total-section { 
+          padding: 24px 20px; 
+        }
+        .price-summary { 
+          flex-direction: column; 
+          align-items: flex-start; 
+        }
+        .btn-book { 
+          width: 100%; 
+          padding: 14px; 
+        }
+    }
+
+    /* Мобильные 320-480px */
+    @media (max-width: 480px) {
+        body { 
+          font-size: 14px; 
+        }
+        .container { 
+          padding: 0 16px; 
+        }
+        .header { 
+          padding: 16px 0; 
+        }
+        .logo-img { 
+          width: 36px; 
+          height: 36px; 
+        }
+        .logo-text { 
+          font-size: 1.2rem; 
+        }
+        .nav-menu ul { 
+          gap: 12px; 
+        }
+        .nav-menu a { 
+          font-size: 0.9rem; 
+        }
+        .booking-page h1 { 
+          font-size: 1.5rem; 
+        }
+        .booking-card { 
+          padding: 16px; 
+          border-radius: 20px; 
+        }
+        .booking-card-header h2,
+        .booking-card-header h3 {
+           font-size: 1.1rem; 
+        }
+        .form-group input, .form-group select { 
+          padding: 10px 14px; 
+          font-size: 0.9rem; 
+        }
+        .form-group label { 
+          font-size: 0.75rem; 
+        }
+        .discount-badge { 
+          font-size: 0.85rem; 
+          padding: 6px 12px; 
+        }
+        .client-section, .total-section { 
+          padding: 20px 16px; 
+        }
+        .total-section h2 { 
+          font-size: 1.3rem; 
+        }
+        .total-final { 
+          font-size: 1.4rem; 
+        }
+        .btn-add, .btn-book { 
+          padding: 12px 24px; 
+          font-size: 0.95rem; 
+        }
+        .footer { 
+          padding: 32px 0 24px; 
+        }
+        .footer-brand h3 { 
+          font-size: 1.3rem; 
+        
+        }
+        .copyright { 
+          font-size: 0.75rem; 
+        }
+    }
+
+    /* Очень маленькие экраны <320px */
+    @media (max-width: 320px) {
+        .logo-text { 
+          font-size: 1rem; 
+        }
+        .booking-page h1 { 
+          font-size: 1.3rem; 
+        }
+        .btn-book { 
+          font-size: 0.9rem; 
+          padding: 10px 20px; 
+        }
+    }
+
+    /* Горизонтальная ориентация на мобильных */
+    @media (max-height: 500px) and (orientation: landscape) {
+        .header { 
+          padding: 12px 0; 
+          position: relative; 
+        }
+        .booking-page { 
+          padding: 30px 0 40px; 
+        }
+        .booking-card { 
+          padding: 16px; 
+        }
+    }
+
+    /* Отключение анимаций при предпочтении */
+    @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after {
+            transition: none !important;
+            animation: none !important;
+        }
+    }
+
+    /* Тач-устройства */
+    @media (hover: none) and (pointer: coarse) {
+        .form-group input,
+        .form-group select,
+        .btn-add,
+        .btn-book {
+            min-height: 44px;
+        }
+        .btn-book:hover { transform: none; }
+    }
+    </style>
+</head>
+<body>
+<!--Шапка сайта-->
+<header class="header">
+    <div class="container header-inner">
+        <a href="index.html" class="logo-link">
+            <img class="logo-img" src="img/logo.png" alt="Логотип">
+            <span class="logo-text">Буктрейл</span>
+        </a>
+        <nav class="nav-menu">
+            <ul>
+                <li><a href="sales.html">Акции</a></li>
+                <li><a href="booking.html">Бронирование</a></li>
+                <li><a href="profile.html">Личный кабинет</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<!-- Основной контент-->
+<main class="booking-page">
+    <div class="container">
+        <h1>Бронирование книг</h1>
+        <p class="booking-subtitle">Скидка 5% за каждые 3 дня аренды • Максимум 25%</p>
+
+        <!-- Позиция книги 1 -->
+        <div class="booking-card">
+            <div class="booking-card-header">
+                <h2>Книга №1</h2>
+                <button class="remove-btn" type="button" title="Удалить">×</button>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group" style="flex: 2;">
+                    <label>Выберите книгу</label>
+                    <select name="book1">
+                        <option value="">— Выберите из списка —</option>
+                        <option value="1">Мастер и Маргарита — Булгаков</option>
+                        <option value="2">1984 — Оруэлл</option>
+                        <option value="3">Преступление и наказание — Достоевский</option>
+                        <option value="4">Гарри Поттер — Роулинг</option>
+                        <option value="5">Маленький принц — Экзюпери</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>ID книги</label>
+                    <input type="text" readonly value="BK-001">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Автор</label>
+                    <input type="text" readonly value="М. А. Булгаков">
+                </div>
+                <div class="form-group">
+                    <label>Инвентарный номер</label>
+                    <input type="text" readonly value="INV-78452">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Дата выдачи</label>
+                    <input type="date" name="start1">
+                </div>
+                <div class="form-group">
+                    <label>Дата возврата</label>
+                    <input type="date" name="end1">
+                </div>
+                <div class="form-group">
+                    <label>Цена за день (₽)</label>
+                    <input type="number" value="50" min="1">
+                </div>
+                <div class="form-group">
+                    <label>Филиал</label>
+                    <select name="branch1">
+                        <option>Центральный</option>
+                        <option>Северный</option>
+                        <option>Южный</option>
+                        <option>Западный</option>
+                        <option>Восточный</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="discount-badge">
+                <span>Скидка:</span>
+                <span class="discount-percent">0%</span>
+                <span>•</span>
+                <span class="days-info">0 дней</span>
+            </div>
+            <div class="discount-bar">
+                <div class="discount-fill" data-days="0"></div>
+            </div>
+
+            <div class="price-summary">
+                <span class="price-item">Без скидки: <strong>0 ₽</strong></span>
+                <span class="price-item">Экономия: <strong>0 ₽</strong></span>
+                <span class="price-total">Итого: 0 ₽</span>
+            </div>
+        </div>
+
+        <!-- Позиция книги 2 (пример) -->
+        <div class="booking-card">
+            <div class="booking-card-header">
+                <h2>Книга №2</h2>
+                <button class="remove-btn" type="button" title="Удалить">×</button>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group" style="flex: 2;">
+                    <label>Выберите книгу</label>
+                    <select name="book2">
+                        <option value="">— Выберите из списка —</option>
+                        <option value="1">Мастер и Маргарита — Булгаков</option>
+                        <option value="2">1984 — Оруэлл</option>
+                        <option value="3">Преступление и наказание — Достоевский</option>
+                        <option value="4">Гарри Поттер — Роулинг</option>
+                        <option value="5">Маленький принц — Экзюпери</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>ID книги</label>
+                    <input type="text" readonly>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Автор</label>
+                    <input type="text" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Инвентарный номер</label>
+                    <input type="text" readonly>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Дата выдачи</label>
+                    <input type="date" name="start2">
+                </div>
+                <div class="form-group">
+                    <label>Дата возврата</label>
+                    <input type="date" name="end2">
+                </div>
+                <div class="form-group">
+                    <label>Цена за день (₽)</label>
+                    <input type="number" value="45" min="1">
+                </div>
+                <div class="form-group">
+                    <label>Филиал</label>
+                    <select name="branch2">
+                        <option>Центральный</option>
+                        <option>Северный</option>
+                        <option>Южный</option>
+                        <option>Западный</option>
+                        <option>Восточный</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="discount-badge">
+                <span>Скидка:</span>
+                <span class="discount-percent">0%</span>
+                <span>•</span>
+                <span class="days-info">0 дней</span>
+            </div>
+            <div class="discount-bar">
+                <div class="discount-fill" data-days="0"></div>
+            </div>
+
+            <div class="price-summary">
+                <span class="price-item">Без скидки: <strong>0 ₽</strong></span>
+                <span class="price-item">Экономия: <strong>0 ₽</strong></span>
+                <span class="price-total">Итого: 0 ₽</span>
+            </div>
+        </div>
+
+        <button class="btn-add" type="button">+ Добавить ещё книгу</button>
+
+        <!-- Данные клиента -->
+        <section class="client-section">
+            <h2>Данные клиента</h2>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Имя</label>
+                    <input type="text" placeholder="Иван">
+                </div>
+                <div class="form-group">
+                    <label>Фамилия</label>
+                    <input type="text" placeholder="Иванов">
+                </div>
+                <div class="form-group">
+                    <label>Отчество</label>
+                    <input type="text" placeholder="Иванович">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Телефон</label>
+                    <input type="tel" placeholder="+7 (___) ___-__-__">
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" placeholder="example@mail.ru">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Банковская карта</label>
+                    <input type="text" placeholder="•••• •••• •••• 1234" maxlength="19">
+                    <div class="card-preview">Последние 4 цифры: 1234</div>
+                </div>
+                <div class="form-group">
+                    <label>Выбрать сохранённую</label>
+                    <select>
+                        <option value="">— Выберите карту —</option>
+                        <option>Visa •••• 4128</option>
+                        <option>Mastercard •••• 5678</option>
+                        <option>Мир •••• 9012</option>
+                    </select>
+                </div>
+            </div>
+        </section>
+
+        <!-- Итоговая стоимость -->
+        <section class="total-section">
+            <h2>Ваш заказ</h2>
+            <div class="total-row">
+                <span>Книг в заказе:</span>
+                <strong>2</strong>
+            </div>
+            <div class="total-row">
+                <span>Общая стоимость:</span>
+                <strong>0 ₽</strong>
+            </div>
+            <div class="total-row" style="color: #E9C46A;">
+                <span>Скидка всего:</span>
+                <strong>0 ₽</strong>
+            </div>
+            <div class="total-row total-final">
+                <span>К оплате:</span>
+                <span>0 ₽</span>
+            </div>
+        </section>
+
+        <button class="btn-book" type="button">Оформить бронирование</button>
+    </div>
+</main>
+
+<!--Подвал-->
+<footer class="footer">
+  <div class="container footer-inner">
+    <div class="footer-brand">
+        <h3>Буктрейл</h3>
+        <p>Делитесь книгами с другими. Читайте больше, тратьте меньше.</p>
+    </div>
+    <div class="footer-contacts">
+      <h4>Связь с нами</h4>
+      <p>
+        <img src="img/icon/icon-phone.png" alt="телефон">
+        <span>8 (800) 555-35-35</span>
+      </p>
+      <p>
+        <img src="img/icon/icon-email.png" alt="email">
+        <span>booktrail@readers.ru</span>
+      </p>
+    </div>
+    <div class="footer-nav">
+      <h4>Навигация</h4>
+      <ul>
+        <li><a href="index.html">Главная страница</a></li>
+        <li><a href="sales.html">Акции</a></li>
+        <li><a href="booking.html">Бронирование</a></li>
+        <li><a href="catalog.html">Каталог книг</a></li>
+        <li><a href="profile.html">Личный кабинет</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="copyright container">
+    <p>Курсовая работа Бегуновой Марии ИСП-33</p>
+  </div>
+</footer>
+
+</body>
+</html>

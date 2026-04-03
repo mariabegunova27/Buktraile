@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Вход — Буктрейл</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #1F1A2E;
+      color: #F0EAD6;
+      font-family: 'Inter', sans-serif;
+      line-height: 1.5;
+      scroll-behavior: smooth;
+    }
+
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Шапка сайта */
+    .header {
+      padding: 24px 0;
+      border-bottom: 1px solid rgba(244, 162, 97, 0.25);
+      background-color: rgba(31, 26, 46, 0.9);
+      backdrop-filter: blur(2px);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-img {
+      width: 48px;
+      height: 48px;
+      object-fit: contain;
+      filter: drop-shadow(0 2px 6px rgba(0,0,0,0.2));
+    }
+
+    .logo-text {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      font-weight: 600;
+      letter-spacing: -0.5px;
+      background: linear-gradient(135deg, #F4A261, #E9C46A);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      text-decoration: none;
+    }
+
+    .nav-menu ul {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-menu a {
+      text-decoration: none;
+      font-weight: 500;
+      color: #F0EAD6;
+      transition: 0.2s ease;
+      font-size: 1.05rem;
+      letter-spacing: 0.3px;
+      padding-bottom: 6px;
+      border-bottom: 2px solid transparent;
+    }
+
+    .nav-menu a:hover,
+    .nav-menu a.active {
+      color: #F4A261;
+      border-bottom-color: #F4A261;
+    }
+
+    /* Основной блок входа */
+    .login-section {
+      padding: 80px 0 100px;
+    }
+
+    .login-card {
+      max-width: 520px;
+      margin: 0 auto;
+      background: rgba(46, 38, 66, 0.7);
+      backdrop-filter: blur(4px);
+      border-radius: 48px;
+      border: 1px solid rgba(244, 162, 97, 0.4);
+      padding: 48px 40px;
+      transition: all 0.2s;
+      box-shadow: 0 20px 35px -12px rgba(0,0,0,0.4);
+    }
+
+    .login-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      font-weight: 600;
+      text-align: center;
+      margin-bottom: 12px;
+      background: linear-gradient(135deg, #F4A261, #E9C46A);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .login-sub {
+      text-align: center;
+      color: #CFC8E0;
+      margin-bottom: 40px;
+      font-size: 0.95rem;
+      border-bottom: 1px dashed rgba(244,162,97,0.3);
+      display: inline-block;
+      width: auto;
+      margin-left: auto;
+      margin-right: auto;
+      padding-bottom: 12px;
+    }
+
+    /* Форма */
+    .login-form {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .input-group label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #E9C46A;
+    }
+
+    .input-group label .required {
+      color: #F4A261;
+      margin-left: 4px;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 14px 18px;
+      background: #2A243F;
+      border: 1px solid #4A3B6E;
+      border-radius: 60px;
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      color: #F0EAD6;
+      transition: 0.2s;
+      outline: none;
+    }
+
+    .input-group input:focus {
+      border-color: #F4A261;
+      box-shadow: 0 0 0 2px rgba(244, 162, 97, 0.3);
+    }
+
+    .input-group input::placeholder {
+      color: #7C6F9E;
+      font-weight: 300;
+      font-size: 0.9rem;
+    }
+
+    /* Кнопка входа */
+    .login-btn {
+      background: #F4A261;
+      border: none;
+      padding: 16px 28px;
+      border-radius: 60px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      font-family: 'Inter', sans-serif;
+      color: #1F1A2E;
+      cursor: pointer;
+      transition: 0.2s;
+      letter-spacing: 0.5px;
+      width: 100%;
+      margin-top: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+
+    .login-btn:hover {
+      background: #E9C46A;
+      transform: scale(0.98);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+    }
+
+    /* Ссылка "Забыли пароль?" по центру */
+    .forgot-password {
+      text-align: center;
+      margin-top: 16px;
+    }
+
+    .forgot-password a {
+      color: #F4A261;
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: 0.2s;
+      border-bottom: 1px solid transparent;
+    }
+
+    .forgot-password a:hover {
+      color: #E9C46A;
+      border-bottom-color: #E9C46A;
+    }
+
+    .register-link {
+      text-align: center;
+      margin-top: 28px;
+      font-size: 0.9rem;
+      color: #CFC8E0;
+    }
+
+    .register-link a {
+      color: #F4A261;
+      text-decoration: none;
+      font-weight: 600;
+      border-bottom: 1px solid rgba(244,162,97,0.5);
+    }
+
+    .register-link a:hover {
+      color: #E9C46A;
+      border-bottom-color: #E9C46A;
+    }
+
+    /* Футер */
+    .footer {
+      background: #14101F;
+      padding: 48px 0 32px;
+      border-top: 1px solid rgba(244, 162, 97, 0.3);
+      margin-top: 20px;
+    }
+
+    .footer-inner {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 40px;
+    }
+
+    .footer-contacts {
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .footer-contacts p {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 18px;
+      font-size: 1rem;
+    }
+
+    .footer-contacts img {
+      width: 24px;
+      height: 24px;
+      filter: brightness(0) invert(1);
+      opacity: 0.8;
+    }
+
+    .footer-nav {
+      flex: 1;
+      min-width: 150px;
+    }
+
+    .footer-brand {
+      flex: 1;
+      min-width: 250px;
+      max-width: 350px;
+    }
+
+    /* Исправлено: h2 вместо h3 */
+    .footer-brand h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      font-weight: 600;
+      margin-bottom: 16px;
+      background: linear-gradient(135deg, #F4A261, #E9C46A);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .footer-brand p {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: #CFC8E0;
+      opacity: 0.9;
+    }
+
+    /* Исправлено: h3 вместо h4 */
+    .footer-nav h3, .footer-contacts h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      margin-bottom: 20px;
+      color: #E9C46A;
+    }
+
+    .footer-nav ul {
+      list-style: none;
+    }
+
+    .footer-nav li {
+      margin-bottom: 12px;
+    }
+
+    .footer-nav a {
+      text-decoration: none;
+      color: #CFC8E0;
+      transition: 0.2s;
+    }
+
+    .footer-nav a:hover {
+      color: #F4A261;
+      padding-left: 4px;
+    }
+
+    .copyright {
+      text-align: center;
+      margin-top: 48px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      font-size: 0.8rem;
+      opacity: 0.7;
+    }
+
+    /* Адаптивность */
+    /* Планшеты и ноутбуки (до 1199px) */
+    @media (max-width: 1199px) {
+      .container {
+        max-width: 960px;
+        padding: 0 20px;
+      }
+      .login-card {
+        padding: 40px 32px;
+      }
+      .login-title {
+        font-size: 2rem;
+      }
+    }
+
+    /* Планшеты портрет (до 768px) */
+    @media (max-width: 768px) {
+      .header-inner {
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+      }
+      .nav-menu ul {
+        gap: 20px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      .logo-text {
+        font-size: 1.5rem;
+      }
+      .logo-img {
+        width: 40px;
+        height: 40px;
+      }
+      .login-section {
+        padding: 50px 0 70px;
+      }
+      .login-card {
+        padding: 32px 24px;
+        border-radius: 36px;
+      }
+      .login-title {
+        font-size: 1.8rem;
+      }
+      .footer-inner {
+        flex-direction: column;
+        gap: 32px;
+      }
+      .footer-contacts, .footer-nav, .footer-brand {
+        text-align: center;
+        max-width: 100%;
+        min-width: 100%;
+      }
+      .footer-contacts p {
+        justify-content: center;
+      }
+      .footer-nav ul {
+        text-align: center;
+      }
+      .footer-brand p {
+        margin: 0 auto;
+      }
+    }
+    /* Мобильные телефоны (до 480px) */
+    @media (max-width: 480px) {
+      body {
+        font-size: 14px;
+      }
+      .container {
+        padding: 0 16px;
+      }
+      .header {
+        padding: 16px 0;
+      }
+      .logo-text {
+        font-size: 1.3rem;
+      }
+      .nav-menu a {
+        font-size: 0.85rem;
+      }
+      .login-card {
+        padding: 28px 20px;
+        border-radius: 28px;
+      }
+      .login-title {
+        font-size: 1.6rem;
+      }
+      .login-sub {
+        font-size: 0.85rem;
+        margin-bottom: 30px;
+      }
+      .input-group label {
+        font-size: 0.75rem;
+      }
+      .input-group input {
+        padding: 12px 16px;
+        font-size: 0.9rem;
+      }
+      .login-btn {
+        padding: 12px 20px;
+        font-size: 1rem;
+      }
+      .footer {
+        padding: 32px 0 24px;
+      }
+      .footer-brand h2 {
+        font-size: 1.4rem;
+      }
+      .footer-nav h3, .footer-contacts h3 {
+        font-size: 1.2rem;
+      }
+      .copyright {
+        margin-top: 32px;
+        padding-top: 20px;
+        font-size: 0.7rem;
+      }
+    }
+
+    /* Очень узкие экраны */
+    @media (max-width: 380px) {
+      .login-title {
+        font-size: 1.4rem;
+      }
+      .input-group input {
+        padding: 10px 14px;
+      }
+    }
+
+    /* Отключаем hover на тач-устройствах */
+    @media (hover: none) {
+      .login-btn:hover {
+        transform: none;
+      }
+      .nav-menu a:hover {
+        border-bottom-color: transparent;
+      }
+    }
+  </style>
+</head>
+<body>
+<!-- Шапка сайта -->
+<header class="header">
+  <div class="container header-inner">
+    <div class="logo-area">
+      <img class="logo-img" src="img/logo.png" alt="Буктрейл логотип">
+      <a href="index.html" class="logo-text">Буктрейл</a>
+    </div>
+    <nav class="nav-menu">
+      <ul>
+        <li><a href="index.html">Акции</a></li>
+        <li><a href="booking.html">Бронирование</a></li>
+        <li><a href="register.html">Личный кабинет</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<!-- Основной контент -->
+<main>
+  <section class="login-section">
+    <div class="container">
+      <div class="login-card">
+        <h1 class="login-title">Вход</h1>
+        <div style="text-align: center;">
+          <span class="login-sub">Войдите в свой аккаунт</span>
+        </div>
+
+        <form class="login-form" action="#" method="post">
+          <div class="input-group">
+            <label>Логин <span class="required">*</span></label>
+            <input type="text" name="login" placeholder="Введите логин или email" required autocomplete="username">
+          </div>
+          <div class="input-group">
+            <label>Пароль <span class="required">*</span></label>
+            <input type="password" name="password" placeholder="Введите пароль" required autocomplete="current-password">
+          </div>
+
+          <button type="submit" class="login-btn">Войти</button>
+
+          <div class="forgot-password">
+            <a href="register.html">Забыли пароль?</a>
+          </div>
+        </form>
+
+        <div class="register-link">
+          Нет учётной записи? <a href="register.html">Зарегистрируйтесь сейчас</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- Подвал  -->
+<footer class="footer">
+  <div class="container footer-inner">
+    <div class="footer-brand">
+        <h2>Буктрейл</h2>
+        <p>Делитесь книгами с другими. Читайте больше, тратьте меньше.</p>
+    </div>
+    <div class="footer-contacts">
+      <h3>Связь с нами</h3>
+      <p>
+        <img src="img/icon/icon-phone.png" alt="телефон">
+        <span>8 (800) 555-35-35</span>
+      </p>
+      <p>
+        <img src="img/icon/icon-email.png" alt="email">
+        <span>booktrail@readers.ru</span>
+      </p>
+    </div>
+    <div class="footer-nav">
+      <h3>Навигация</h3>
+      <ul>
+        <li><a href="index.html">Главная страница</a></li>
+        <li><a href="sales.html">Акции</a></li>
+        <li><a href="booking.html">Бронирование</a></li>
+        <li><a href="catalog.html">Каталог книг</a></li>
+        <li><a href="profile.html">Личный кабинет</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="copyright container">
+    <p>Курсовая работа Бегуновой Марии ИСП-33</p>
+  </div>
+</footer>
+
+</body>
+</html>

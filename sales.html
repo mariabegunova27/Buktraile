@@ -1,0 +1,1122 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Буктрейл | Акции</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #1F1A2E;
+      color: #F0EAD6;
+      line-height: 1.6;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Playfair Display', serif;
+      color: #E9C46A;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+      transition: 0.2s;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Шапка */
+    .header {
+      padding: 20px 0;
+      border-bottom: 1px solid rgba(244, 162, 97, 0.25);
+      background-color: rgba(31, 26, 46, 0.95);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(4px);
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .logo-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-img {
+      width: 40px;
+      height: 40px;
+      object-fit: contain;
+    }
+
+    .logo-text {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 600;
+      background: linear-gradient(135deg, #F4A261, #E9C46A);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .nav-menu ul {
+      display: flex;
+      gap: 24px;
+    }
+
+    .nav-menu a {
+      font-weight: 500;
+      color: #F0EAD6;
+      padding-bottom: 4px;
+      border-bottom: 2px solid transparent;
+    }
+
+    .nav-menu a:hover,
+    .nav-menu a.active {
+      color: #F4A261;
+      border-bottom-color: #F4A261;
+    }
+
+    /* Страница акций */
+    .sales-page {
+      padding: 60px 0 80px;
+      min-height: 70vh;
+    }
+
+    .sales-page h1 {
+      text-align: center;
+      font-size: 2.4rem;
+      margin-bottom: 12px;
+    }
+
+    .sales-subtitle {
+      text-align: center;
+      color: #CFC8E0;
+      opacity: 0.9;
+      margin-bottom: 40px;
+      font-size: 1.05rem;
+    }
+
+    /* Баннер акции */
+    .sales-banner {
+      background: linear-gradient(135deg, rgba(244, 162, 97, 0.2), rgba(233, 196, 106, 0.1));
+      border: 2px solid rgba(244, 162, 97, 0.4);
+      border-radius: 24px;
+      padding: 40px;
+      margin-bottom: 48px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .sales-banner::before {
+      content: "✦";
+      position: absolute;
+      top: 20px;
+      left: 30px;
+      font-size: 3rem;
+      color: rgba(244, 162, 97, 0.3);
+    }
+
+    .sales-banner::after {
+      content: "✦";
+      position: absolute;
+      bottom: 20px;
+      right: 30px;
+      font-size: 3rem;
+      color: rgba(244, 162, 97, 0.3);
+    }
+
+    .banner-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, #F4A261, #E9C46A);
+      color: #1F1A2E;
+      padding: 8px 20px;
+      border-radius: 40px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      margin-bottom: 16px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .sales-banner h2 {
+      font-size: 2rem;
+      margin-bottom: 12px;
+      color: #F4A261;
+    }
+
+    .sales-banner p {
+      font-size: 1.05rem;
+      color: #CFC8E0;
+      max-width: 600px;
+      margin: 0 auto 20px;
+    }
+
+    .banner-timer {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin-top: 24px;
+      flex-wrap: wrap;
+    }
+
+    .timer-item {
+      background: rgba(46, 38, 66, 0.8);
+      border: 1px solid rgba(244, 162, 97, 0.3);
+      border-radius: 12px;
+      padding: 16px 24px;
+      min-width: 80px;
+    }
+
+    .timer-value {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #E9C46A;
+      line-height: 1;
+    }
+
+    .timer-label {
+      font-size: 0.8rem;
+      color: #CFC8E0;
+      margin-top: 4px;
+      text-transform: uppercase;
+    }
+
+    /* Сетка акций */
+    .sales-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 28px;
+      margin-bottom: 40px;
+    }
+
+    .sale-card {
+      background: rgba(46, 38, 66, 0.7);
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid rgba(244, 162, 97, 0.3);
+      transition: 0.2s;
+    }
+
+    .sale-card:hover {
+      border-color: #F4A261;
+      transform: translateY(-4px);
+    }
+
+    .sale-image {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      background: linear-gradient(135deg, #2A243F, #1F1A2E);
+    }
+
+    .sale-content {
+      padding: 24px;
+    }
+
+    .sale-tag {
+      display: inline-block;
+      background: rgba(244, 162, 97, 0.2);
+      color: #F4A261;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    .sale-content h3 {
+      font-size: 1.3rem;
+      margin-bottom: 8px;
+      color: #F0EAD6;
+    }
+
+    .sale-content p {
+      font-size: 0.95rem;
+      color: #CFC8E0;
+      opacity: 0.9;
+      margin-bottom: 16px;
+      line-height: 1.5;
+    }
+
+    .sale-dates {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.85rem;
+      color: #CFC8E0;
+      margin-bottom: 16px;
+      padding-bottom: 16px;
+      border-bottom: 1px dashed rgba(244, 162, 97, 0.3);
+    }
+
+    .sale-discount {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #E9C46A;
+      margin-bottom: 16px;
+    }
+
+    .sale-discount span {
+      font-size: 0.9rem;
+      font-weight: 400;
+      color: #CFC8E0;
+    }
+
+    .btn-sale {
+      display: inline-block;
+      background: transparent;
+      border: 2px solid #F4A261;
+      color: #F4A261;
+      padding: 10px 24px;
+      border-radius: 40px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: 0.2s;
+    }
+
+    .btn-sale:hover {
+      background: #F4A261;
+      color: #1F1A2E;
+    }
+
+    /* Секция преимуществ */
+    .benefits-section {
+      background: rgba(46, 38, 66, 0.5);
+      border-radius: 24px;
+      padding: 40px;
+      margin: 40px 0;
+      border: 1px solid rgba(244, 162, 97, 0.3);
+    }
+
+    .benefits-section h2 {
+      text-align: center;
+      font-size: 1.8rem;
+      margin-bottom: 32px;
+    }
+
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 24px;
+    }
+
+    .benefit-item {
+      text-align: center;
+      padding: 20px;
+    }
+
+    .benefit-icon {
+      width: 60px;
+      height: 60px;
+      object-fit: contain;
+      margin-bottom: 12px;
+      filter: brightness(0) invert(1);
+      opacity: 0.9;
+    }
+
+    /* Заголовки h3 в карточках преимуществ */
+    .benefit-item h3 {
+      font-size: 1.1rem;
+      margin-bottom: 8px;
+      color: #F4A261;
+    }
+
+    .benefit-item p {
+      font-size: 0.9rem;
+      color: #CFC8E0;
+      opacity: 0.9;
+    }
+
+    /* Подписка на уведомления */
+    .subscribe-section {
+      background: linear-gradient(135deg, rgba(244, 162, 97, 0.15), rgba(233, 196, 106, 0.1));
+      border: 2px solid rgba(244, 162, 97, 0.4);
+      border-radius: 24px;
+      padding: 40px;
+      text-align: center;
+      margin: 40px 0;
+    }
+
+    .subscribe-section h2 {
+      font-size: 1.8rem;
+      margin-bottom: 12px;
+    }
+
+    .subscribe-section p {
+      color: #CFC8E0;
+      margin-bottom: 24px;
+      font-size: 1rem;
+    }
+
+    .subscribe-form {
+      display: flex;
+      gap: 12px;
+      max-width: 500px;
+      margin: 0 auto;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .subscribe-form input {
+      flex: 1;
+      min-width: 250px;
+      padding: 12px 20px;
+      background: #2A243F;
+      border: 1px solid #4A3B6E;
+      border-radius: 40px;
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      color: #F0EAD6;
+    }
+
+    .subscribe-form input:focus {
+      outline: none;
+      border-color: #F4A261;
+      box-shadow: 0 0 0 3px rgba(244, 162, 97, 0.2);
+    }
+
+    .icon-small {
+      width: 18px;
+      height: 18px;
+      object-fit: contain;
+      filter: brightness(0) invert(1);
+      opacity: 0.8;
+    }
+
+    .subscribe-form button {
+      background: linear-gradient(135deg, #F4A261, #E9C46A);
+      color: #1F1A2E;
+      border: none;
+      padding: 12px 28px;
+      border-radius: 40px;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .subscribe-form button:hover {
+      transform: translateY(-2px);
+    }
+
+    /* Подвал */
+    .footer {
+      background: #14101F;
+      padding: 48px 0 32px;
+      border-top: 1px solid rgba(244, 162, 97, 0.3);
+      margin-top: 20px;
+    }
+
+    .footer-inner {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 40px;
+    }
+
+    .footer-contacts {
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .footer-contacts p {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 18px;
+      font-size: 1rem;
+    }
+
+    .footer-contacts img {
+      width: 24px;
+      height: 24px;
+      filter: brightness(0) invert(1);
+      opacity: 0.8;
+    }
+
+    .footer-nav {
+      flex: 1;
+      min-width: 150px;
+    }
+
+    .footer-brand {
+      flex: 1;
+      min-width: 250px;
+      max-width: 350px;
+    }
+
+    .footer-brand h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      font-weight: 600;
+      margin-bottom: 16px;
+      color: #E9C46A;
+      letter-spacing: -0.3px;
+      background: linear-gradient(135deg, #F4A261, #E9C46A);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .footer-brand p {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: #CFC8E0;
+      opacity: 0.9;
+      margin-bottom: 0;
+    }
+
+    .footer-nav h4, .footer-contacts h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      margin-bottom: 20px;
+      color: #E9C46A;
+    }
+
+    .footer-nav ul {
+      list-style: none;
+    }
+
+    .footer-nav li {
+      margin-bottom: 12px;
+    }
+
+    .footer-nav a {
+      text-decoration: none;
+      color: #CFC8E0;
+      transition: 0.2s;
+    }
+
+    .footer-nav a:hover {
+      color: #F4A261;
+      padding-left: 4px;
+    }
+
+    .copyright {
+      text-align: center;
+      margin-top: 48px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      font-size: 0.8rem;
+      opacity: 0.7;
+    }
+
+    /* Адаптивность футера (как на главной) */
+    @media (max-width: 1024px) {
+      .footer-inner {
+        flex-direction: column;
+      }
+      .footer-brand,
+      .footer-contacts,
+      .footer-nav {
+        min-width: 100%;
+        text-align: center;
+      }
+      .footer-contacts p {
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .footer-inner {
+        flex-direction: column;
+        gap: 32px;
+      }
+      .footer-contacts,
+      .footer-nav {
+        min-width: 100%;
+        text-align: center;
+      }
+      .footer-contacts p {
+        justify-content: center;
+      }
+      .footer-brand {
+        min-width: 100%;
+        max-width: 100%;
+        text-align: center;
+        margin-bottom: 24px;
+      }
+      .footer-brand h3 {
+        font-size: 1.5rem;
+      }
+      .footer-brand p {
+        font-size: 0.9rem;
+        max-width: 400px;
+        margin: 0 auto;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .footer {
+        padding: 32px 0 24px;
+      }
+      .footer-brand h3 {
+        font-size: 1.3rem;
+        margin-bottom: 12px;
+      }
+      .footer-brand p {
+        font-size: 0.85rem;
+        line-height: 1.5;
+      }
+      .footer-nav h4,
+      .footer-contacts h4 {
+        font-size: 1.1rem;
+        margin-bottom: 16px;
+      }
+      .footer-contacts p {
+        font-size: 0.9rem;
+        flex-direction: column;
+        gap: 6px;
+      }
+      .footer-contacts img {
+        width: 20px;
+        height: 20px;
+      }
+      .footer-nav li {
+        margin-bottom: 10px;
+      }
+      .copyright {
+        margin-top: 32px;
+        padding-top: 20px;
+        font-size: 0.75rem;
+      }
+    }
+
+    /* Остальные адаптивные стили для страницы акций */
+    @media (max-width: 1280px) {
+      .container {
+        max-width: 960px;
+        padding: 0 20px;
+      }
+      .sales-page h1 {
+        font-size: 2.2rem;
+      }
+      .sales-grid {
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      }
+    }
+
+    @media (max-width: 1024px) {
+      .container {
+        max-width: 720px;
+      }
+      .sales-page h1 {
+        font-size: 2rem;
+      }
+      .sales-banner {
+        padding: 32px;
+      }
+      .banner-timer {
+        gap: 16px;
+      }
+      .timer-item {
+        min-width: 70px;
+        padding: 12px 16px;
+      }
+      .timer-value {
+        font-size: 1.6rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .header-inner {
+        flex-direction: column;
+        gap: 12px;
+      }
+      .nav-menu ul {
+        gap: 16px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      .logo-text {
+        font-size: 1.3rem;
+      }
+      .sales-page {
+        padding: 40px 0 60px;
+      }
+      .sales-page h1 {
+        font-size: 1.8rem;
+      }
+      .sales-subtitle {
+        font-size: 1rem;
+      }
+      .sales-banner {
+        padding: 28px 20px;
+      }
+      .sales-banner h2 {
+        font-size: 1.5rem;
+      }
+      .sales-banner p {
+        font-size: 0.95rem;
+      }
+      .banner-timer {
+        gap: 12px;
+      }
+      .timer-item {
+        min-width: 60px;
+        padding: 10px 12px;
+      }
+      .timer-value {
+        font-size: 1.4rem;
+      }
+      .timer-label {
+        font-size: 0.7rem;
+      }
+      .sales-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+      .benefits-section {
+        padding: 32px 20px;
+      }
+      .benefits-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .subscribe-section {
+        padding: 32px 20px;
+      }
+      .subscribe-form {
+        flex-direction: column;
+      }
+      .subscribe-form input {
+        min-width: 100%;
+      }
+      .subscribe-form button {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 480px) {
+      body {
+        font-size: 14px;
+      }
+      .container {
+        padding: 0 16px;
+      }
+      .header {
+        padding: 16px 0;
+      }
+      .logo-img {
+        width: 36px;
+        height: 36px;
+      }
+      .logo-text {
+        font-size: 1.2rem;
+      }
+      .nav-menu ul {
+        gap: 12px;
+      }
+      .nav-menu a {
+        font-size: 0.9rem;
+      }
+      .sales-page h1 {
+        font-size: 1.5rem;
+      }
+      .sales-subtitle {
+        font-size: 0.95rem;
+      }
+      .sales-banner {
+        padding: 24px 16px;
+        border-radius: 20px;
+      }
+      .sales-banner::before,
+      .sales-banner::after {
+        display: none;
+      }
+      .banner-badge {
+        font-size: 0.8rem;
+        padding: 6px 16px;
+      }
+      .sales-banner h2 {
+        font-size: 1.3rem;
+      }
+      .sales-banner p {
+        font-size: 0.9rem;
+      }
+      .banner-timer {
+        gap: 8px;
+      }
+      .timer-item {
+        min-width: 50px;
+        padding: 8px 10px;
+        border-radius: 8px;
+      }
+      .timer-value {
+        font-size: 1.2rem;
+      }
+      .timer-label {
+        font-size: 0.65rem;
+      }
+      .sale-card {
+        border-radius: 16px;
+      }
+      .sale-image {
+        height: 160px;
+      }
+      .sale-content {
+        padding: 20px 16px;
+      }
+      .sale-content h3 {
+        font-size: 1.1rem;
+      }
+      .sale-content p {
+        font-size: 0.9rem;
+      }
+      .sale-discount {
+        font-size: 1.3rem;
+      }
+      .btn-sale {
+        padding: 8px 20px;
+        font-size: 0.9rem;
+        width: 100%;
+        text-align: center;
+      }
+      .benefits-section {
+        padding: 24px 16px;
+        border-radius: 20px;
+      }
+      .benefits-section h2 {
+        font-size: 1.4rem;
+      }
+      .benefits-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+      .benefit-icon {
+        width: 50px;
+        height: 50px;
+      }
+      .benefit-item h3 {
+        font-size: 1rem;
+      }
+      .benefit-item p {
+        font-size: 0.85rem;
+      }
+      .subscribe-section {
+        padding: 28px 16px;
+        border-radius: 20px;
+      }
+      .subscribe-section h2 {
+        font-size: 1.4rem;
+      }
+      .subscribe-section p {
+        font-size: 0.9rem;
+      }
+      .icon-small {
+        width: 16px;
+        height: 16px;
+      }
+      .subscribe-form input,
+      .subscribe-form button {
+        padding: 10px 16px;
+        font-size: 0.95rem;
+      }
+    }
+
+    @media (max-width: 320px) {
+      .logo-text {
+        font-size: 1rem;
+      }
+      .sales-page h1 {
+        font-size: 1.3rem;
+      }
+      .sales-banner h2 {
+        font-size: 1.1rem;
+      }
+      .timer-item {
+        min-width: 45px;
+      }
+      .timer-value {
+        font-size: 1rem;
+      }
+      .sale-discount {
+        font-size: 1.1rem;
+      }
+    }
+
+    @media (max-height: 500px) and (orientation: landscape) {
+      .header {
+        padding: 12px 0;
+        position: relative;
+      }
+      .sales-page {
+        padding: 30px 0 40px;
+      }
+      .sales-banner {
+        padding: 20px 16px;
+      }
+      .banner-timer {
+        gap: 8px;
+      }
+      .timer-item {
+        padding: 8px 10px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        transition: none !important;
+      }
+    }
+
+    @media (hover: none) and (pointer: coarse) {
+      .btn-sale,
+      .subscribe-form button,
+      .subscribe-form input {
+        min-height: 44px;
+      }
+      .sale-card:hover {
+        transform: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header class="header">
+  <div class="container header-inner">
+    <a href="index.html" class="logo-link">
+      <img class="logo-img" src="img/logo.png" alt="Логотип">
+      <span class="logo-text">Буктрейл</span>
+    </a>
+    <nav class="nav-menu">
+      <ul>
+        <li><a href="sales.html" class="active">Акции</a></li>
+        <li><a href="booking.html">Бронирование</a></li>
+        <li><a href="profile.html">Кабинет</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main class="sales-page">
+  <div class="container">
+    <h1>Акции и специальные предложения</h1>
+    <p class="sales-subtitle">Экономьте на аренде книг с нашими выгодными предложениями</p>
+
+    <!-- Главный баннер -->
+    <div class="sales-banner">
+      <span class="banner-badge">Горячее предложение</span>
+      <h2>Скидка 25% на первую аренду</h2>
+      <p>Зарегистрируйтесь сейчас и получите скидку 25% на первую книгу. Акция действует до конца месяца!</p>
+      <div class="banner-timer">
+        <div class="timer-item">
+          <div class="timer-value">14</div>
+          <div class="timer-label">Дней</div>
+        </div>
+        <div class="timer-item">
+          <div class="timer-value">08</div>
+          <div class="timer-label">Часов</div>
+        </div>
+        <div class="timer-item">
+          <div class="timer-value">45</div>
+          <div class="timer-label">Минут</div>
+        </div>
+        <div class="timer-item">
+          <div class="timer-value">30</div>
+          <div class="timer-label">Секунд</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Сетка акций -->
+    <div class="sales-grid">
+      <!-- Акция 1 -->
+      <div class="sale-card">
+        <img class="sale-image" src="img/sale/sale-1.jfif" alt="Акция 3 книги">
+        <div class="sale-content">
+          <span class="sale-tag">Выгодно</span>
+          <h3>3 книги по цене 2</h3>
+          <p>Арендуйте любые три книги одновременно и платите только за две. Самая дешёвая книга — бесплатно!</p>
+          <div class="sale-dates">
+            <img src="img/icon/icon-calendar.png" alt="Дата" class="icon-small">
+            <span>До 31 марта 2026</span>
+          </div>
+          <div class="sale-discount">Скидка до 33% <span>на заказ</span></div>
+          <a href="booking.html" class="btn-sale">Воспользоваться</a>
+        </div>
+      </div>
+
+      <!-- Акция 2 -->
+      <div class="sale-card">
+        <img class="sale-image" src="img/sale/sale-2.jfif" alt="Акция студентам">
+        <div class="sale-content">
+          <span class="sale-tag">Студентам</span>
+          <h3>Скидка 15% для студентов</h3>
+          <p>Предъявите студенческий билет и получите скидку 15% на все книги в течение семестра.</p>
+          <div class="sale-dates">
+            <img src="img/icon/icon-calendar.png" alt="Дата" class="icon-small">
+            <span>До 30 июня 2026</span>
+          </div>
+          <div class="sale-discount">−15% <span>постоянно</span></div>
+          <a href="booking.html" class="btn-sale">Воспользоваться</a>
+        </div>
+      </div>
+
+      <!-- Акция 3 -->
+      <div class="sale-card">
+        <img class="sale-image" src="img/sale/sale-3.jfif" alt="Акция выходные">
+        <div class="sale-content">
+          <span class="sale-tag">Выходные</span>
+          <h3>Счастливые выходные</h3>
+          <p>Каждую субботу и воскресенье аренда книг со скидкой 20%. Идеально для уютного чтения!</p>
+          <div class="sale-dates">
+            <img src="img/icon/icon-calendar.png" alt="Дата" class="icon-small">
+            <span>Каждую неделю</span>
+          </div>
+          <div class="sale-discount">−20% <span>по выходным</span></div>
+          <a href="booking.html" class="btn-sale">Воспользоваться</a>
+        </div>
+      </div>
+
+      <!-- Акция 4 -->
+      <div class="sale-card">
+        <img class="sale-image" src="img/sale/sale-4.jpeg" alt="Акция подписка">
+        <div class="sale-content">
+          <span class="sale-tag">Подписка</span>
+          <h3>Месячная подписка</h3>
+          <p>Безлимитная аренда до 5 книг в месяц за фиксированную плату. Выгоднее чем по отдельности!</p>
+          <div class="sale-dates">
+            <img src="img/icon/icon-calendar.png" alt="Дата" class="icon-small">
+            <span>Постоянно</span>
+          </div>
+          <div class="sale-discount">от 499 ₽ <span>в месяц</span></div>
+          <a href="booking.html" class="btn-sale">Оформить</a>
+        </div>
+      </div>
+
+      <!-- Акция 5 -->
+      <div class="sale-card">
+        <img class="sale-image" src="img/sale/sale-5.jfif" alt="Акция друзья">
+        <div class="sale-content">
+          <span class="sale-tag">Реферал</span>
+          <h3>Приведи друга</h3>
+          <p>Пригласите друга в Буктрейл и получите по 100 баллов на счёт каждый после его первой аренды.</p>
+          <div class="sale-dates">
+            <img src="img/icon/icon-calendar.png" alt="Дата" class="icon-small">
+            <span>Постоянно</span>
+          </div>
+          <div class="sale-discount">100 баллов <span>каждому</span></div>
+          <a href="profile.html" class="btn-sale">Пригласить</a>
+        </div>
+      </div>
+
+      <!-- Акция 6 -->
+      <div class="sale-card">
+        <img class="sale-image" src="img/sale/sale-6.jfif" alt="Акция день рождения">
+        <div class="sale-content">
+          <span class="sale-tag">Подарок</span>
+          <h3>День рождения</h3>
+          <p>В ваш день рождения дарим скидку 30% на любую книгу и двойные баллы за аренду.</p>
+          <div class="sale-dates">
+            <img src="img/icon/icon-calendar.png" alt="Дата" class="icon-small">
+            <span>В день рождения</span>
+          </div>
+          <div class="sale-discount">−30% + 2× балла</div>
+          <a href="profile.html" class="btn-sale">Подробнее</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Преимущества -->
+    <section class="benefits-section">
+      <h2>Почему выгодно с Буктрейл</h2>
+      <div class="benefits-grid">
+        <div class="benefit-item">
+          <img src="img/icon/icon-savings.png" alt="Экономия" class="benefit-icon">
+          <h3>Экономия до 70%</h3>
+          <p>Аренда книг дешевле покупки в 5-7 раз</p>
+        </div>
+        <div class="benefit-item">
+          <img src="img/icon/icon-gift.png" alt="Баллы" class="benefit-icon">
+          <h3>Баллы за каждую книгу</h3>
+          <p>Копите баллы и обменивайте на скидки</p>
+        </div>
+        <div class="benefit-item">
+          <img src="img/icon/icon-books.png" alt="Книги" class="benefit-icon">
+          <h3>Более 10 000 книг</h3>
+          <p>Огромный выбор на любой вкус</p>
+        </div>
+        <div class="benefit-item">
+          <img src="img/icon/icon-delivery.png" alt="Доставка" class="benefit-icon">
+          <h3>Бесплатная доставка</h3>
+          <p>При заказе от 3-х книг</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Подписка -->
+    <section class="subscribe-section">
+      <h2>Не пропустите новые акции</h2>
+      <p>Подпишитесь на рассылку и узнавайте о скидках первыми</p>
+      <form class="subscribe-form">
+        <input type="email" placeholder="Ваш email" required>
+        <button type="submit">Подписаться</button>
+      </form>
+    </section>
+  </div>
+</main>
+
+<!-- Подвал -->
+<footer class="footer">
+  <div class="container footer-inner">
+    <div class="footer-brand">
+      <h3>Буктрейл</h3>
+      <p>Делитесь книгами с другими. Читайте больше, тратьте меньше.</p>
+    </div>
+    <div class="footer-contacts">
+      <h4>Связь с нами</h4>
+      <p>
+        <img src="img/icon/icon-phone.png" alt="телефон">
+        <span>8 (800) 555-35-35</span>
+      </p>
+      <p>
+        <img src="img/icon/icon-email.png" alt="email">
+        <span>booktrail@readers.ru</span>
+      </p>
+    </div>
+    <div class="footer-nav">
+      <h4>Навигация</h4>
+      <ul>
+        <li><a href="index.html">Главная страница</a></li>
+        <li><a href="sales.html">Акции</a></li>
+        <li><a href="booking.html">Бронирование</a></li>
+        <li><a href="catalog.html">Каталог книг</a></li>
+        <li><a href="profile.html">Личный кабинет</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="copyright container">
+    <p>Курсовая работа Бегуновой Марии ИСП-33</p>
+  </div>
+</footer>
+
+</body>
+</html>

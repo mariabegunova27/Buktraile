@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Буктрейл | История бронирований</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #1F1A2E;
+      color: #F0EAD6;
+      line-height: 1.6;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Playfair Display', serif;
+      color: #E9C46A;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+      transition: 0.2s;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Шапка */
+    .header {
+      padding: 20px 0;
+      border-bottom: 1px solid rgba(244, 162, 97, 0.25);
+      background-color: rgba(31, 26, 46, 0.95);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(4px);
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .logo-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-img {
+      width: 40px;
+      height: 40px;
+      object-fit: contain;
+    }
+
+    .logo-text {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 600;
+      background: linear-gradient(135deg, #F4A261, #E9C46A);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .nav-menu ul {
+      display: flex;
+      gap: 24px;
+    }
+
+    .nav-menu a {
+      font-weight: 500;
+      color: #F0EAD6;
+      padding-bottom: 4px;
+      border-bottom: 2px solid transparent;
+    }
+
+    .nav-menu a:hover {
+      color: #F4A261;
+      border-bottom-color: #F4A261;
+    }
+
+    /* Страница истории */
+    .history-page {
+      padding: 60px 0 80px;
+      min-height: 70vh;
+    }
+
+    .history-page h1 {
+      text-align: center;
+      font-size: 2.4rem;
+      margin-bottom: 12px;
+    }
+
+    .history-subtitle {
+      text-align: center;
+      color: #CFC8E0;
+      opacity: 0.9;
+      margin-bottom: 40px;
+      font-size: 1.05rem;
+    }
+
+    /* Карточка бронирования */
+    .booking-history-card {
+      background: rgba(46, 38, 66, 0.7);
+      border-radius: 24px;
+      padding: 28px;
+      margin-bottom: 28px;
+      border: 1px solid rgba(244, 162, 97, 0.3);
+      backdrop-filter: blur(4px);
+    }
+
+    .booking-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 2px solid rgba(244, 162, 97, 0.3);
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .booking-code {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: #F4A261;
+    }
+
+    .booking-total {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #E9C46A;
+    }
+
+    /* Позиции книг */
+    .book-items {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .book-item {
+      background: rgba(30, 25, 45, 0.6);
+      border-radius: 16px;
+      padding: 20px;
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+      flex-wrap: wrap;
+    }
+
+    .book-cover {
+      width: 100px;
+      height: 140px;
+      object-fit: cover;
+      border-radius: 8px;
+      flex-shrink: 0;
+    }
+
+    .book-info {
+      flex: 1;
+      min-width: 200px;
+    }
+
+    /* Заголовки книг теперь h2, но стили как у прежних h3 */
+    .book-info h2 {
+      font-size: 1.2rem;
+      font-family: 'Playfair Display', serif;
+      margin-bottom: 8px;
+      color: #F0EAD6;
+    }
+
+    .book-author {
+      color: #F4A261;
+      font-weight: 500;
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .book-details {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .detail-item {
+      font-size: 0.9rem;
+      color: #CFC8E0;
+    }
+
+    .detail-item strong {
+      color: #E9C46A;
+      margin-right: 4px;
+    }
+
+    .book-price {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #E9C46A;
+      margin-bottom: 12px;
+    }
+
+    .rebook-btn {
+      background: transparent;
+      border: 2px solid #F4A261;
+      color: #F4A261;
+      padding: 10px 24px;
+      border-radius: 40px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .rebook-btn:hover {
+      background: #F4A261;
+      color: #1F1A2E;
+    }
+
+    /* Пустое состояние */
+    .empty-state {
+      text-align: center;
+      padding: 80px 20px;
+      background: rgba(46, 38, 66, 0.5);
+      border-radius: 24px;
+      border: 2px dashed rgba(244, 162, 97, 0.4);
+    }
+
+    .empty-state-icon {
+      font-size: 4rem;
+      margin-bottom: 20px;
+      opacity: 0.6;
+    }
+
+    .empty-state h2 {
+      font-size: 1.8rem;
+      margin-bottom: 12px;
+      color: #CFC8E0;
+    }
+
+    .empty-state p {
+      color: #CFC8E0;
+      opacity: 0.8;
+      font-size: 1.05rem;
+    }
+
+    /* Футер */
+    .footer {
+      background: #14101F;
+      padding: 48px 0 32px;
+      border-top: 1px solid rgba(244, 162, 97, 0.3);
+      margin-top: 20px;
+    }
+
+    .footer-inner {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 40px;
+    }
+
+    .footer-contacts {
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .footer-contacts p {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 18px;
+      font-size: 1rem;
+    }
+
+    .footer-contacts img {
+      width: 24px;
+      height: 24px;
+      filter: brightness(0) invert(1);
+      opacity: 0.8;
+    }
+
+    .footer-nav {
+      flex: 1;
+      min-width: 150px;
+    }
+
+    .footer-brand {
+    flex: 1;
+    min-width: 250px;
+    max-width: 350px;
+  }
+
+  .footer-brand h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 16px;
+    color: #E9C46A;
+    letter-spacing: -0.3px;
+    background: linear-gradient(135deg, #F4A261, #E9C46A);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+  }
+
+  .footer-brand p {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #CFC8E0;
+    opacity: 0.9;
+    margin-bottom: 0;
+}
+
+    .footer-nav h4, .footer-contacts h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      margin-bottom: 20px;
+      color: #E9C46A;
+    }
+
+    .footer-nav ul {
+      list-style: none;
+    }
+
+    .footer-nav li {
+      margin-bottom: 12px;
+    }
+
+    .footer-nav a {
+      text-decoration: none;
+      color: #CFC8E0;
+      transition: 0.2s;
+    }
+
+    .footer-nav a:hover {
+      color: #F4A261;
+      padding-left: 4px;
+    }
+
+    .copyright {
+      text-align: center;
+      margin-top: 48px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      font-size: 0.8rem;
+      opacity: 0.7;
+    }
+
+    /* Адаптивность */
+
+    /* Ноутбуки 1025-1280px */
+    @media (max-width: 1280px) {
+      .container {
+        max-width: 960px;
+        padding: 0 20px;
+      }
+
+      .history-page h1 {
+        font-size: 2.2rem;
+      }
+    }
+
+    /* Планшеты 768-1024px */
+    @media (max-width: 1024px) {
+      .container {
+        max-width: 720px;
+      }
+
+      .history-page h1 {
+        font-size: 2rem;
+      }
+
+      .footer-inner {
+        flex-direction: column;
+      }
+
+      .footer-brand,
+      .footer-contacts,
+      .footer-nav {
+        min-width: 100%;
+        text-align: center;
+      }
+
+      .footer-contacts p {
+        justify-content: center;
+      }
+    }
+
+    /* Планшеты портрет 481-767px */
+    @media (max-width: 768px) {
+      .header-inner {
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .nav-menu ul {
+        gap: 16px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .logo-text {
+        font-size: 1.3rem;
+      }
+
+      .history-page {
+        padding: 40px 0 60px;
+      }
+
+      .history-page h1 {
+        font-size: 1.8rem;
+      }
+
+      .booking-history-card {
+        padding: 20px;
+      }
+
+      .book-item {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+
+      .book-cover {
+        width: 120px;
+        height: 160px;
+      }
+
+      .book-details {
+        justify-content: center;
+      }
+
+      .booking-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    /* Мобильные 320-480px */
+    @media (max-width: 480px) {
+      body {
+        font-size: 14px;
+      }
+
+      .container {
+        padding: 0 16px;
+      }
+
+      .header {
+        padding: 16px 0;
+      }
+
+      .logo-img {
+        width: 36px;
+        height: 36px;
+      }
+
+      .logo-text {
+        font-size: 1.2rem;
+      }
+
+      .nav-menu ul {
+        gap: 12px;
+      }
+
+      .nav-menu a {
+        font-size: 0.9rem;
+      }
+
+      .history-page h1 {
+        font-size: 1.5rem;
+      }
+
+      .history-subtitle {
+        font-size: 1rem;
+      }
+
+      .booking-history-card {
+        padding: 16px;
+        border-radius: 20px;
+      }
+
+      .booking-code {
+        font-size: 1.1rem;
+      }
+
+      .booking-total {
+        font-size: 1.2rem;
+      }
+
+      .book-item {
+        padding: 16px;
+      }
+
+      .book-cover {
+        width: 100px;
+        height: 140px;
+      }
+
+      .book-info h2 {
+        font-size: 1.05rem;
+      }
+
+      .book-author {
+        font-size: 0.95rem;
+      }
+
+      .book-details {
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .detail-item {
+        font-size: 0.85rem;
+      }
+
+      .book-price {
+        font-size: 1.05rem;
+      }
+
+      .rebook-btn {
+        padding: 8px 20px;
+        font-size: 0.9rem;
+        width: 100%;
+        justify-content: center;
+      }
+
+      .empty-state {
+        padding: 60px 20px;
+      }
+
+      .empty-state-icon {
+        font-size: 3rem;
+      }
+
+      .empty-state h2 {
+        font-size: 1.4rem;
+      }
+
+      .empty-state p {
+        font-size: 0.95rem;
+      }
+
+      .footer {
+        padding: 32px 0 24px;
+      }
+
+      .footer-brand h3 {
+        font-size: 1.3rem;
+      }
+
+      .copyright {
+        font-size: 0.75rem;
+      }
+    }
+
+    /* Очень маленькие экраны <320px */
+    @media (max-width: 320px) {
+      .logo-text {
+        font-size: 1rem;
+      }
+
+      .history-page h1 {
+        font-size: 1.3rem;
+      }
+
+      .booking-code,
+      .booking-total {
+        font-size: 1rem;
+      }
+
+      .book-cover {
+        width: 80px;
+        height: 110px;
+      }
+    }
+
+    /* Горизонтальная ориентация на мобильных */
+    @media (max-height: 500px) and (orientation: landscape) {
+      .header {
+        padding: 12px 0;
+        position: relative;
+      }
+
+      .history-page {
+        padding: 30px 0 40px;
+      }
+
+      .book-cover {
+        width: 70px;
+        height: 100px;
+      }
+    }
+
+    /* Отключение анимаций */
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        transition: none !important;
+      }
+    }
+
+    /* Тач-устройства */
+    @media (hover: none) and (pointer: coarse) {
+      .rebook-btn {
+        min-height: 44px;
+      }
+
+      .rebook-btn:hover {
+        transform: none;
+      }
+    }
+  </style>
+</head>
+<body>
+ <!-- Шапка сайта -->
+  <header class="header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo-link">
+        <img class="logo-img" src="img/logo.png" alt="Логотип">
+        <span class="logo-text">Буктрейл</span>
+      </a>
+      <nav class="nav-menu">
+        <ul>
+          <li><a href="sales.html">Акции</a></li>
+          <li><a href="booking.html">Бронирование</a></li>
+          <li><a href="profile.html">Личный кабинет</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+ <!-- Основной контент -->
+  <main class="history-page">
+    <div class="container">
+      <h1>История бронирований</h1>
+      <p class="history-subtitle">Все ваши предыдущие заказы</p>
+
+      <!-- Бронирование №1 -->
+      <div class="booking-history-card">
+        <div class="booking-header">
+          <span class="booking-code">Бронь #BK-2026-001</span>
+          <span class="booking-total">450 ₽</span>
+        </div>
+
+        <div class="book-items">
+          <div class="book-item">
+            <img class="book-cover" src="img/books/book-cover-1.png" alt="Обложка книги">
+            <div class="book-info">
+              <h2>Мастер и Маргарита</h2>
+              <span class="book-author">М. А. Булгаков</span>
+              <div class="book-details">
+                <span class="detail-item"><strong>Заказ:</strong> #ORD-4521</span>
+                <span class="detail-item"><strong>Выдача:</strong> 15.03.2026</span>
+                <span class="detail-item"><strong>Возврат:</strong> 22.03.2026</span>
+                <span class="detail-item"><strong>Дней:</strong> 7</span>
+                <span class="detail-item"><strong>Филиал:</strong> Центральный</span>
+              </div>
+              <div class="book-price">350 ₽</div>
+              <button class="rebook-btn" type="button">Забронировать снова</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Бронирование №2 -->
+      <div class="booking-history-card">
+        <div class="booking-header">
+          <span class="booking-code">Бронь #BK-2026-002</span>
+          <span class="booking-total">680 ₽</span>
+        </div>
+
+        <div class="book-items">
+          <div class="book-item">
+            <img class="book-cover" src="img/books/book-cover-2.png" alt="Обложка книги">
+            <div class="book-info">
+              <h2>1984</h2>
+              <span class="book-author">Джордж Оруэлл</span>
+              <div class="book-details">
+                <span class="detail-item"><strong>Заказ:</strong> #ORD-4589</span>
+                <span class="detail-item"><strong>Выдача:</strong> 01.04.2026</span>
+                <span class="detail-item"><strong>Возврат:</strong> 10.04.2026</span>
+                <span class="detail-item"><strong>Дней:</strong> 9</span>
+                <span class="detail-item"><strong>Филиал:</strong> Северный</span>
+              </div>
+              <div class="book-price">360 ₽</div>
+              <button class="rebook-btn" type="button">Забронировать снова</button>
+            </div>
+          </div>
+
+          <div class="book-item">
+            <img class="book-cover" src="img/books/book-cover-3.png" alt="Обложка книги">
+            <div class="book-info">
+              <h2>Маленький принц</h2>
+              <span class="book-author">Антуан де Сент-Экзюпери</span>
+              <div class="book-details">
+                <span class="detail-item"><strong>Заказ:</strong> #ORD-4590</span>
+                <span class="detail-item"><strong>Выдача:</strong> 01.04.2026</span>
+                <span class="detail-item"><strong>Возврат:</strong> 05.04.2026</span>
+                <span class="detail-item"><strong>Дней:</strong> 4</span>
+                <span class="detail-item"><strong>Филиал:</strong> Северный</span>
+              </div>
+              <div class="book-price">120 ₽</div>
+              <button class="rebook-btn" type="button">Забронировать снова</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Пустое состояние (раскомментировать если нет бронирований) -->
+      <!--
+      <div class="empty-state">
+        <h2>Здесь пока ничего нет</h2>
+        <p>Вы ещё не бронировали книги. Начните с выбора книг в каталоге!</p>
+      </div>
+      -->
+    </div>
+  </main>
+
+   <!-- Подвал (исправлен: удалён лишний закрывающий div) -->
+<footer class="footer">
+  <div class="container footer-inner">
+    <div class="footer-brand">
+        <h3>Буктрейл</h3>
+        <p>Делитесь книгами с другими. Читайте больше, тратьте меньше.</p>
+    </div>
+    <div class="footer-contacts">
+      <h4>Связь с нами</h4>
+      <p>
+        <img src="img/icon/icon-phone.png" alt="телефон">
+        <span>8 (800) 555-35-35</span>
+      </p>
+      <p>
+        <img src="img/icon/icon-email.png" alt="email">
+        <span>booktrail@readers.ru</span>
+      </p>
+    </div>
+    <div class="footer-nav">
+      <h4>Навигация</h4>
+      <ul>
+        <li><a href="index.html">Главная страница</a></li>
+        <li><a href="sales.html">Акции</a></li>
+        <li><a href="booking.html">Бронирование</a></li>
+        <li><a href="catalog.html">Каталог книг</a></li>
+        <li><a href="profile.html">Личный кабинет</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="copyright container">
+    <p>Курсовая работа Бегуновой Марии ИСП-33</p>
+  </div>
+</footer>
+
+</body>
+</html>
